@@ -1,8 +1,4 @@
-# Project Proposal
-
-Jesús Henríquez
-
-**Corner Particles**
+# Project Proposal - *Corner Particles*
 
 ## The Problem
 
@@ -46,3 +42,9 @@ less relevant.
 This project is related to graphics because it generates images after making computations.
 
 ## Plan
+
+*Week 1 & 2* (Nov. 6 - 20): Implement particles for only one image
+*Week 3* (Nov. 20 - 27): Implement creation of particles for multiple frames and effects of force fields
+*Week 4* (Nov. 28 - Dec. 4): Test different effect variations like change of color. Write final report                                                               
+
+Jesús Henríquez
