@@ -1,4 +1,4 @@
-# Corner Particles
+# 2D Feature Particles
 
 ## Project Proposal
 
