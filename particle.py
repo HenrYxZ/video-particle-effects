@@ -29,3 +29,13 @@ class Particle:
             self.creation_time = creation_time
         else:
             time.time()
+
+    def get_position(self):
+        return self.rigid_body.state.transform.position
+
+    def get_scale(self):
+        return self.rigid_body.state.transform.scale
+
+    def is_alive(self, current_time):
+        is_alive = current_time - self.creation_time < self.life_span
+        return is_alive

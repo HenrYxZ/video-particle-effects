@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Transform:
     def __init__(self, position, scale=1):
         """
@@ -56,6 +59,15 @@ class RigidBody:
         transform = Transform(position)
         next_state = State(transform, v)
         return next_state
+
+
+def create_body_at(point):
+    pos = np.array([point[0], point[1]])
+    transform = Transform(pos)
+    v = np.array([0, 0])
+    state = State(transform, v)
+    body = RigidBody(state)
+    return body
 
 
 class Simulation:

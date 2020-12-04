@@ -134,3 +134,4 @@ dmypy.json
 # Assets Directories
 images/
 output/
+videos/
