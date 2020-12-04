@@ -1,8 +1,114 @@
 # 2D Feature Particles
 
+By Jesús Henríquez
+
 An open source Python app that creates 2D particles from images (or videos
 ) using feature points from Computer Vision feature detectors. Giving the
- information of the silhouettes in some cool abstract way.
+information of the silhouettes in some cool abstract open to interpretation 
+way.
+
+## Final Report - Dec 4, 2020
+
+### Problem
+
+I wanted to recreate a video effect that I saw in a concert where the images are
+replaced by black backgrounds and red points that go around the silhouettes,
+suggesting the shapes.
+
+### Previous Work
+
+In a quick search in Google I couldn't find a video effect like that, so I 
+had to figure out myself how to do it.
+
+In Computer Vision there are automatic ways to get keypoints from an image 
+(they are used to describe images). I had the idea of using the position of
+these keypoints to generate the red dots. The FAST corner detector is one that
+calculates very quick so I chose to use that. I use OpenCV for that
+[https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_feature2d/py_fast/py_fast.html](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_feature2d/py_fast/py_fast.html)
+
+I also use Particles that can have certain life span, color and movement.
+
+I use this Python libraries:
+- imageio - for creating a video output
+- opencv-python - to get FAST corner keypoints from images
+- pillow - for saving images
+- progress - to show a progress bar with the percent done in the program as 
+  it runs
+- numpy - to use arrays
+
+### My work
+
+I downloaded a live concert from Youtube of my favorite band to work on it.
+[https://www.youtube.com/watch?v=zNaUv_XYFGg](https://www.youtube.com/watch?v=zNaUv_XYFGg)
+
+Made the code to read the video frame by frame, getting keypoints for each one,
+and creating a new particle for each keypoint, then render the current particles
+into an output frame and appending them, and finally create the video with the
+set of output frames.
+
+```python
+ret, frame = cap.read()
+kp = fast.detect(frame, None)
+# Get list of keypoints per frame
+keypoints = process_keypoints(kp)
+# Apply effect to keypoints (create particles per frame)
+particles = particle_effects(keypoints, [])
+# Render the particles into an image for the output video
+img_arr = render(particles)
+# Append rendered image into video
+writer.append_data(img_arr)
+```
+
+
+### Results
+
+Creating particles that are only alive for one frame it takes less than 3 
+minutes to process the 6 min 30 sec video in an AMD Ryzen 4900HS 8-core 
+processor.
+
+![output]('out.mp4')
+
+And using particles that are alive for 1.25 seconds is this, it takes almost
+15 min to compute.
+
+![delay]('delay.mp4')
+
+### Analysis
+
+One main issue with FAST feature is they are depending on a threshold parameter,
+so you have to try many threshold values to find one that gives good results.
+
+Is also a big difference in computing time when more particles are added per
+frame. The entire video has about 12000 frames.
+
+Finally, I think the results are good, they give a stylistic view that is open
+to interpretation of the listener and invites him to wonder. But sometimes the
+randomness of the features might distract the viewer if it is not very clear
+what is in the screen or if it is too noisy.
+
+### Future work
+
+I implemented rigid body physics for the Particles, but I didn't have enough
+time to apply it, so in the future one could apply a force that would move the
+particles in time. The same with color and scale of the particles. Here is an
+example of how it can be done:
+
+```python
+# Only use the particles that are alive
+particles = list(
+    filter(lambda elem: elem.is_alive(current_time), particles)
+)
+
+for particle in particles:
+    percent = (current_time - particle.creation_time) / particle.life_span
+    # Fade out in time
+    particle.color *= (1 - percent)
+    # Decrease size in time
+    particle.rigid_body.state.transform.scale = 1 - percent
+    # move by force
+    f = np.array([1, 1])
+    particle.rigid_body.state = particle.rigid_body.next_state(delta_time, f)
+```
 
 ## Project Update - Nov 20, 2020
 

@@ -18,16 +18,10 @@ OUTPUT_FILENAME = "output/fast.jpg"
 VIDEO_FILENAME = f"{VIDEOS_DIR}/explosions.mp4"
 OUT_VIDEO_FILENAME = f"{VIDEOS_DIR}/out.mp4"
 MAX_QUALITY = 95
-THRESHOLD = 25
+THRESHOLD = 35
 # duration of video in seconds
 DURATION = 6 * 60 + 29
 FPS = 29.970030
-
-
-def open_image(img_filename):
-    img = Image.open(img_filename)
-    img_array = np.array(img)
-    return img_array
 
 
 def draw_red_dots(img_arr, features):
@@ -70,13 +64,14 @@ def main():
     step_size = np.ceil(total_frames / 100).astype(int)
     bar = Bar("Processing...", max=100, suffix='%(percent)d%%')
     bar.check_tty = False
+    particles = []
     while cap.isOpened():
         ret, frame = cap.read()
         kp = fast.detect(frame, None)
         # Get list of keypoints per frame
         keypoints = process_keypoints(kp)
         # Apply effect to keypoints (create particles per frame)
-        particles = particle_effects(keypoints)
+        particles = particle_effects(keypoints, [])
         # Render the particles into an image for the output video
         img_arr = render(particles)
         # Append rendered image into video
