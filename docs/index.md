@@ -66,12 +66,12 @@ Creating particles that are only alive for one frame it takes less than 3
 minutes to process the 6 min 30 sec video in an AMD Ryzen 4900HS 8-core 
 processor.
 
-![output]('out.mp4')
+[output video]('out.mp4')
 
 And using particles that are alive for 1.25 seconds is this, it takes almost
 15 min to compute.
 
-![delay]('delay.mp4')
+[output video]('delay.mp4')
 
 ### Analysis
 

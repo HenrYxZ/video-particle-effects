@@ -23,7 +23,6 @@ def particle_effects(keypoints, particles):
     particles = list(
         filter(lambda elem: elem.is_alive(current_time), particles)
     )
-    # particles = []
     for point in keypoints:
         rigid_body = create_body_at(point)
         color = np.array([MAX_VALUE, 0, 0])
