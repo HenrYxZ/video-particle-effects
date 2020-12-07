@@ -2,6 +2,7 @@ from enum import Enum
 import time
 
 # Local Modules
+from constants import BOX_SIZE, CIRCLE_RADIUS
 from physics import RigidBody
 
 
@@ -39,3 +40,9 @@ class Particle:
     def is_alive(self, current_time):
         is_alive = current_time - self.creation_time < self.life_span
         return is_alive
+
+    def is_on_screen(self, w, h):
+        pos = self.get_position()
+        side = max(BOX_SIZE / 2, CIRCLE_RADIUS)
+        is_on_screen = side <= pos[0] < w - side and side <= pos[1] < h - side
+        return is_on_screen

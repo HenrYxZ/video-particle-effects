@@ -18,7 +18,7 @@ OUTPUT_FILENAME = "output/fast.jpg"
 VIDEO_FILENAME = f"{VIDEOS_DIR}/explosions.mp4"
 OUT_VIDEO_FILENAME = f"{VIDEOS_DIR}/out.mp4"
 MAX_QUALITY = 95
-THRESHOLD = 35
+THRESHOLD = 50
 # duration of video in seconds
 DURATION = 6 * 60 + 29
 FPS = 29.970030
@@ -65,13 +65,18 @@ def main():
     bar = Bar("Processing...", max=100, suffix='%(percent)d%%')
     bar.check_tty = False
     particles = []
+    h = None
+    w = None
     while cap.isOpened():
         ret, frame = cap.read()
+        if not h:
+            w, h, _ = frame.shape
         kp = fast.detect(frame, None)
         # Get list of keypoints per frame
         keypoints = process_keypoints(kp)
         # Apply effect to keypoints (create particles per frame)
-        particles = particle_effects(keypoints, [])
+        delta_time = 1 / FPS
+        particles = particle_effects(keypoints, particles, delta_time, w, h)
         # Render the particles into an image for the output video
         img_arr = render(particles)
         # Append rendered image into video
