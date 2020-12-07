@@ -18,7 +18,7 @@ OUTPUT_FILENAME = "output/fast.jpg"
 VIDEO_FILENAME = f"{VIDEOS_DIR}/explosions.mp4"
 OUT_VIDEO_FILENAME = f"{VIDEOS_DIR}/out.mp4"
 MAX_QUALITY = 95
-THRESHOLD = 50
+THRESHOLD = 20
 # duration of video in seconds
 DURATION = 6 * 60 + 29
 FPS = 29.970030
