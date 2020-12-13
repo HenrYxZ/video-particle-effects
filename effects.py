@@ -8,6 +8,7 @@ from physics import create_body_at
 
 
 PARTICLES_LIFE_SPAN = 2
+DEFAULT_PARTICLE_COLOR = np.array([MAX_VALUE, 0, 0], dtype=int)
 
 
 def particle_effects(keypoints, particles, delta_time, w, h):
@@ -30,7 +31,7 @@ def particle_effects(keypoints, particles, delta_time, w, h):
         # Decrease size in time
         particle.rigid_body.state.transform.scale = 1 - percent
         # move by force
-        f = np.array([25, -12])
+        f = np.array([350, -120])
         particle.rigid_body.state = particle.rigid_body.next_state(
             delta_time, f
         )
@@ -39,9 +40,9 @@ def particle_effects(keypoints, particles, delta_time, w, h):
     )
     for point in keypoints:
         rigid_body = create_body_at(point)
-        color = np.array([MAX_VALUE, 0, 0], dtype=int)
+        color = DEFAULT_PARTICLE_COLOR
         particle = Particle(
-            rigid_body, color, Shape.BOX, PARTICLES_LIFE_SPAN, current_time
+            rigid_body, color, Shape.CIRCLE, PARTICLES_LIFE_SPAN, current_time
         )
         particles.append(particle)
     return particles
