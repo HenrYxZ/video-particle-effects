@@ -7,6 +7,10 @@ An open source Python app that creates 2D particles from images (or videos
 information of the silhouettes in some cool abstract open to interpretation 
 way.
 
+You can see a video made with this here:
+
+[https://www.youtube.com/watch?v=ajTteM615Co](https://www.youtube.com/watch?v=ajTteM615Co)
+
 ## Final Report - Dec 4, 2020
 
 ### Problem
@@ -66,12 +70,12 @@ Creating particles that are only alive for one frame it takes less than 3
 minutes to process the 6 min 30 sec video in an AMD Ryzen 4900HS 8-core 
 processor.
 
-https://hernaldo.me/video-particle-effects/out.mp4
+[Video 1](https://hernaldo.me/video-particle-effects/out.mp4)
 
 And using particles that are alive for 1.25 seconds is this, it takes almost
 15 min to compute.
 
-https://hernaldo.me/video-particle-effects/delay.mp4
+[Video 2](https://hernaldo.me/video-particle-effects/delay.mp4)
 
 ### Analysis
 
